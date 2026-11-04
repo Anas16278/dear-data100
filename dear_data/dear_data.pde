@@ -1,3 +1,6 @@
+// Dear Data 100: my gym log
+// Each circle = one exercise. Size = weight (kg). Colour = muscle group.
+
 Table table;
 
 void setup() {
@@ -9,22 +12,24 @@ void setup() {
 
 void draw() {
   background(255);
-  for (int i = 0; i < table.getRowCount(); i++) {
+  int n = table.getRowCount();
+  float gap = (width - 60) / float(max(n - 1, 1));
+  for (int i = 0; i < n; i++) {
     TableRow row = table.getRow(i);
     float w = row.getFloat("weight_kg");
     String muscle = row.getString("muscle");
-    float x = 30 + i * 26;
-    float y = height / 2;
     float d = sizeFromWeight(w);
     fill(colourFor(muscle));
-    ellipse(x, y, d, d);
+    ellipse(30 + i * gap, height / 2, d, d);
   }
 }
 
+// Takes a weight and returns a circle size
 float sizeFromWeight(float w) {
   return w * 0.4;
 }
 
+// Takes a muscle name and returns a colour
 color colourFor(String m) {
   if (m.equals("chest")) return color(220, 60, 60);
   if (m.equals("shoulders")) return color(240, 150, 40);
